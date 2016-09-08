@@ -1,0 +1,231 @@
+.Website Content Editing
+$VER=2.75
+$author=Andrew Fountain
+$online=TRUE
+$if $online
+  $include foundation6.txt
+  $style={
+    h2 { color: #888; }
+    h3, h4 { color: #666; }
+    table h2 { font-size:160%; color: #222;}
+    table h3 { font-size:140%; }
+    body .panel h2 { color: #777; }
+    body .panel h3, body .panel h4 {color: #555; }
+    //body div.row { max-width: 48rem; }
+  }
+  $pagestart=$ROW $COL
+  $pageend=$END $END
+  $codefont=80%
+  $prefont=120%
+  $shortcuts=250%
+$else
+  $include incstd.txt
+  $pagestart=
+  $pageend=---
+  $codefont=120%
+  $prefont=120%
+  $shortcuts=210%
+$endif
+
+$command=writeup $FILENAME
+$command+= && wkhtmltopdf2 $pdfopt $FILE.html $FILE.pdf
+$pdfopt=-s Letter -L 10 -R 10 -T 10 -B 10 --zoom .8
+$postamble=$set $p_style1="text-align:right;font-size:small;color:#888" ($author $DATE)
+
+$style+={
+  col.c20 { width:20%; }
+  col.c50 { width:50%; }
+  div.column code      { font-size:$codefont; }
+  table.borders td pre { font-size:$prefont; }
+  pre, code {color:darkgreen; font-weight:bold;}
+  table.codeoutput {margin-left:40px; background-color:#DDD;}
+  pre {white-space: pre-wrap; white-space: -moz-pre-wrap !important;	white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap:break-word; margin:0;}
+  div#shortcuts pre { line-height:$shortcuts; }
+}
+$constant $docNL=
+$demotable5050=<table: class="borders" style="table-layout:fixed; width:100%;"><colgroup><col class="c50" /><col /></colgroup>
+$demotable2080=<table: class="borders" style="table-layout:fixed; width:100%;"><colgroup><col class="c20" /><col /></colgroup>
+$demotable00=<table: class="borders" style="width:100%;">
+$edemotable=</table:>
+$demox={
+ <tr><td>$copy $code=$x $litdoc <code>$code</code></td>
+ <td>$x \n</td></tr>
+}
+$demoxp={
+  <tr><td><pre>$x.litdoc</pre></td>
+  <td>\n$x \n</td></tr>
+}
+
+$tabletype=$demotable5050
+$x=NO EXAMPLE TEXT
+$parameters $example example_line
+$example={
+  $if !$example_line
+    $copy $example_line=$x
+  $endif
+  $tabletype
+  //<table: class="borders" style="table-layout: fixed; width:100%;"><colgroup><col class="c50" /><col /></colgroup>
+  <tr><th>You type</th><th>You will get</th></tr>
+  <tr><td><pre>$example_line.litdoc</pre></td>
+  <td>\n$example_line
+  </td></tr>
+  </table:>
+}
+
+////////////////////////////////////////// from writeup_inc.txt
+//$headingbase=3
+$parameters $H1 h_line
+$H1=...$h_line
+$parameters $H2 h_line
+$H2=....$h_line
+$parameters $H3 h_line
+$H3=.....$h_line
+//$imgbase=/sites/default/files/
+$imgbase=images/
+$parameters $pic pic_url pic_line
+$pic=<figure class="framed">[[$pic_url $pic_line]]/+<figcaption>$pic_line</figcaption></figure>
+
+$stjosephs=[[/location/st_josephs St. Joseph's College]] at 74 Wellesley St West (just west of Bay)
+$stmartins=[[location/stmartins St. Martin's school]] 138 Winchester Street, Toronto, ON M4X 1C5 ([[location/stmartins map & directions]])
+
+$bumos=Bumo and Hle's (Near Bloor/Broadview subway)
+$bumos_full=Bumo and Hle's (Near Bloor/Broadview subway) $BR[[location/50-cambridge 50 Cambridge Ave (apt 303), Toronto ON M4K 2L3]] 
+$fountains_full=The Fountains' (Sackville & Carlton) $BR[[location/360sackville 360 Sackville St, Toronto, M4X 1S4]]
+$fountains=The Fountains' [[/location/360sackville 360 Sackville St]]
+$heskes=Evert & Sandra's (Wellesley & Sherbourne) $BR[[/location/545_Sherbourne 545 Sherbourne St. Apt 1906, _buzzer 317_]]
+$quicks=Braden & Claire's (Bay & College) $BR[[/location/763_Bay 763 Bay Street, Unit 2101 (Buzzer 568 or 917), M5G 2R3]]
+$smiths=Dan & Heather's (St. Clair & Dufferin) $BR[[/location/64Earlsdale 64 Earlsdale Ave]]
+
+/////////////////////////////////
+$pagestart
+
+..1. Adding new events
+-Make sure you are logged in to the website (you will have a black bar accross the top)
+-Menu: *<(Content management / Create content / Event)>*
+-Fill in the form for
+ -*Title*
+ -*Type* --ignore for now. (We need to come up with some useful categories here)
+ -*Date* + start and end time
+-*Body*
+ -Enter the content using the formatting instructions below.
+-Save
+
+..2. Cloning events
+-Simply find a similar event and press the clone button
+-Edit (remembering to remove the word "clone" from the title)
+-Save
+
+..3. Formatting content
+...Paragraphs
+Every time you hit enter it will create a new paragraph.
+
+...Lists
+-People read websites differently to printed material and tend to rapidly skim, looking for the the key points.
+-Using bullet points helps to guide their reading.
+-So do short sentences.
+A minus sign at the start of the line creates a bullet:
+/*
+----t noborders
+| You type | You will get |
+----row
+$NULL
+```
+-This is a bullet point
+-And another one 
+```
+--cell
+-This is a bullet point
+-And another one 
+----
+$demotable5050
+<tr><th>You type</th><th>You will get</th></tr>
+$x=-This is a bullet point\n-And another one
+$demoxp
+$edemotable
+*/
+
+$example -This is a bullet point\n-And another one
+
+..4. Headings
+-Use one or more periods at the start of the line to create headings.
+-The following will create a major (level 1) heading, and then a sub heading
+$headingbase=2
+$example .This is a main heading\n..And a less important one
+$headingbase=1
+
+..5. Text markup
+$example You can _underline_ or *embolden* text.
+//
+-Link to another page on the site using double square brackets.
+ -The format is: <([[url text that is linked]])>
+ -If it is on nlife.ca, omit the <(http://nlife.ca)>.
+
+$example Don't forget the next [[/meeting/2016-09-17 Men's brunch]]\nNewlife is part of [[https://newfrontierstogether.org Newfrontiers]]
+-Add an image that has been uploaded to the page (or another page).
+$example $pic grass.jpg grass in concrete
+
+$pageend
+/////////////////////////////////////////////
+$pagestart
+
+.Advanced Formatting
+...Paragraphs
+For line breaks that do not start new paragraphs, end the line with a $SLASH
+$example Sometimes/\nin poetry/\nlines are short
+
+Empty lines are ignored unless there are two or more successive empty lines which will create a
+
+
+space like the one above.
+
+...Lists
+A minus sign at the start of the line creates a bullet:
+
+$x={
+-This is a bullet point
+-And another one 
+ -You can even have sub-points
+  1. And numbered lists
+  2. Which will work
+   a. Even when you have interrupted yourself
+   b. with sub-sub points
+  3. and then return to numbered
+-And finally back to the main points
+}
+$example
+
+...Tables
+-Tables are begun and ended with four '-' at the start of the line.
+-Each line of the table has a \| at the start, end, and separating each column. 
+-It does not matter if the columns do not line up.
+-If the table begins with \-\-\-\-t then the top line displays as a title
+
+$x={
+----t
+\! Time   \! Event \!
+\! 8:00am \! Breakfast \!
+\! 1:00pm \! Lunch |
+----
+}
+$example
+
+$pageend
+$pagestart
+.Shortcuts //////////////////////////////////////////////////////////////////////
+$x={
+-$stjosephs
+-$stmartins
+-$bumos_full
+-$bumos
+-$fountains_full
+-$fountains
+-$heskes
+-$quicks
+-$smiths
+}
+$pushset $tabletype=$demotable2080
+<div#shortcuts>
+$example
+$pop $tabletype
+</div>
+$pageend
