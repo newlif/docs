@@ -120,7 +120,7 @@ $pagestart
 Every time you hit enter it will create a new paragraph.
 
 ...Lists
--People read websites differently to printed material and tend to rapidly skim, looking for the the key points.
+-People read websites differently from printed material and tend to rapidly skim, looking for the the key points.
 -Using bullet points helps to guide their reading.
 -So do short sentences.
 A minus sign at the start of the line creates a bullet:
@@ -154,11 +154,11 @@ $example .This is a main heading\n..And a less important one
 $headingbase=1
 
 ..5. Text markup
-$example You can _underline_ or *embolden* text.
+$example You can _italicise text_ or *embolden it*.
 //
--Link to another page on the site using double square brackets.
- -The format is: <([[url text that is linked]])>
- -If it is on nlife.ca, omit the <(http://nlife.ca)>.
+-Link to another page on the site using double square brackets, containing the url, a space, and then the words to be linked.
+ -The format is: <([[http://url-comes-first text that is linked]])>
+ -If the url is on nlife.ca, omit the <(http://nlife.ca)>.
 
 $example Don't forget the next [[/meeting/2016-09-17 Men's brunch]]\nNewlife is part of [[https://newfrontierstogether.org Newfrontiers]]
 -Add an image that has been uploaded to the page (or another page).
@@ -197,8 +197,8 @@ $example
 ...Tables
 -Tables are begun and ended with four '-' at the start of the line.
 -Each line of the table has a \| at the start, end, and separating each column. 
--It does not matter if the columns do not line up.
--If the table begins with \-\-\-\-t then the top line displays as a title
+-It does not matter if the columns do not line up in your typing.
+-If the table begins with <(----t)> then the top line displays as a title
 
 $x={
 ----t
